@@ -24,7 +24,7 @@ wss.on("connection", function(ws) {
     console.log('received: %s', message);
     for(var i =0; i<clients.length;i++)
     try{
-      clients[i].send(JSON.stringify(encMsg(message,'1')));
+      clients[i].send(JSON.stringify(message));
     }catch(e){}
   });
 

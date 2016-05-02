@@ -23,7 +23,9 @@ wss.on("connection", function(ws) {
   ws.on('message', function incoming(message) {
     console.log('received: %s', message);
     for(var i =0; i<clients.length;i++)
+    try{
       clients[i].send(JSON.stringify(encMsg(message,'1')));
+    }catch(e){}
   });
 
 
@@ -32,7 +34,7 @@ wss.on("connection", function(ws) {
 
   ws.on("close", function() {
     console.log("websocket connection close")
-    clearInterval(id)
+
   })
 })
 

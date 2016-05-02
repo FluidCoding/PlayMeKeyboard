@@ -102,15 +102,7 @@ p {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
 
     <script>
-      var host = location.origin.replace(/^http/, 'ws')
-      var ws = new WebSocket(host);
-      ws.onmessage = function (event) {
-        let txt = JSON.parse(event.data);
-        console.log(txt)
-        if(txt.length>1)
-          document.querySelector('#chatWindow').innerHTML += "ANON: " + _erwrwee(txt,document.querySelector('#shiftbit').value) + "\n";
-      };
-      function send(){
+        function send(){
         ws.send(document.getElementById("msg").value + "!!!");
       }
       function _erwrwee(str,key){console.log(key); var c='';for(i=0;i<str.length;i++){c+=String.fromCharCode(str[i].charCodeAt(0).toString(10) ^ key.charCodeAt(0).toString(10));}return c;}
@@ -118,11 +110,6 @@ p {
   </head>
   <body>
     <h1>Sup Bois</h1>
-    <input type="text" placeholder="message" id="msg" > </input><button type="submit" onclick="send()"> Send</button>
-    <input type="text" id="shiftBit" maxlength="2" placeholder="shiftbit" ></input>
-    <textarea id="chatWIndow">
-    </textarea>
-
 <label for="soundType">Select a waveform:</label> <select name="soundType" id="soundType">
     <option value="triangle" selected>Triangle</option>
     <option value="sine">Sine</option>
@@ -135,6 +122,21 @@ p {
 <script>
 
 (function() {
+
+  var host = location.origin.replace(/^http/, 'ws')
+  var ws = new WebSocket(host);
+  ws.onmessage = function (event) {
+    let txt = JSON.parse(event.data);
+    console.log(txt)
+    if(txt.length>1)
+      console.log(txt)
+      console.log(event);
+      playNote2('Q');
+      endNote2('Q');
+  };
+
+
+
 // Create audio (context) container
 var audioCtx = new (AudioContext || webkitAudioContext)();
 
@@ -277,9 +279,33 @@ function createKeyboard(notes, containerId) {
             $(notesByKeyCode[event.keyCode].key.html).addClass('playing');
         }
     };
-
+    var playNote2 = function(keyCode) {
+        if(typeof notesByKeyCode[keyCode] !== 'undefined') {
+            // Pipe sound to output (AKA speakers)
+            notesByKeyCode[keyCode].key.sound.play();
+            // Highlight key playing
+            $(notesByKeyCode[keyCode].key.html).addClass('playing');
+        }
+        else if(typeof notesByKeyCode[event.keyCode] !== 'undefined'){
+            notesByKeyCode[event.keyCode].key.sound.play();
+            $(notesByKeyCode[event.keyCode].key.html).addClass('playing');
+        }
+    };
     var endNote = function(event) {
         var keyCode = String.fromCharCode(event.keyCode);
+        if(typeof notesByKeyCode[keyCode] !== 'undefined') {
+            // Kill connection to output
+            notesByKeyCode[keyCode].key.sound.stop();
+            // Remove key highlight
+            $(notesByKeyCode[keyCode].key.html).removeClass('playing');
+        }
+        else if(typeof notesByKeyCode[event.keyCode] !== 'undefined'){
+            notesByKeyCode[event.keyCode].key.sound.stop();
+            $(notesByKeyCode[event.keyCode].key.html).removeClass('playing');
+        }
+    };
+
+    var endNote2 = function(keyCode) {
         if(typeof notesByKeyCode[keyCode] !== 'undefined') {
             // Kill connection to output
             notesByKeyCode[keyCode].key.sound.stop();

@@ -23,7 +23,7 @@ wss.on("connection", function(ws) {
   ws.on('message', function incoming(message) {
     console.log('received: %s', message);
     for(var i =0; i<clients.length;i++)
-    try{if(clients[i]===ws)
+    try{if(clients[i]!==ws)
       clients[i].send(JSON.stringify(message));
     }catch(e){}
   });

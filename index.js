@@ -8,16 +8,25 @@ app.use(express.static(__dirname + "/"))
 
 var server = http.createServer(app)
 server.listen(port)
-
+var clients = [];
 console.log("http server listening on %d", port)
 
 var wss = new WebSocketServer({server: server})
 console.log("websocket server created")
 
 wss.on("connection", function(ws) {
-  var id = setInterval(function() {
-    ws.send(JSON.stringify(new Date()), function() {  })
+  clients.push(ws);
+/*  var id = setInterval(function() {
+    ws.send(JSON.stringify("Hello USER"))
   }, 1000)
+*/
+  ws.on('message', function incoming(message) {
+    console.log('received: %s', message);
+    for(var i =0; i<clients.length;i++)
+      clients[i].send(JSON.stringify(encMsg(message,'1')));
+  });
+
+
 
   console.log("websocket connection open")
 
@@ -26,3 +35,11 @@ wss.on("connection", function(ws) {
     clearInterval(id)
   })
 })
+
+function encMsg(str, key){
+  var c = '';
+  for(i=0; i<str.length; i++) {
+    c += String.fromCharCode(str[i].charCodeAt(0).toString(10) ^ key.charCodeAt(0).toString(10)); // XORing with letter 'K'
+  }
+  return c;
+}

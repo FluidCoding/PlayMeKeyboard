@@ -15,20 +15,30 @@
       ul li {
         line-height: 1.4;
       }
+      textarea{text-align:right; width:100%; height:80%;
+      padding: 10px; font-size: 14px;}
     </style>
 
     <script>
       var host = location.origin.replace(/^http/, 'ws')
       var ws = new WebSocket(host);
       ws.onmessage = function (event) {
-        var li = document.createElement('li');
-        li.innerHTML = JSON.parse(event.data);
-        document.querySelector('#pings').appendChild(li);
+        let txt = JSON.parse(event.data);
+        console.log(txt)
+        if(txt.length>1)
+          document.querySelector('#chatWindow').innerHTML += "ANON: " + _erwrwee(txt,document.querySelector('#shiftbit').value) + "\n";
       };
+      function send(){
+        ws.send(document.getElementById("msg").value + "!!!");
+      }
+      function _erwrwee(str,key){console.log(key); var c='';for(i=0;i<str.length;i++){c+=String.fromCharCode(str[i].charCodeAt(0).toString(10) ^ key.charCodeAt(0).toString(10));}return c;}
     </script>
   </head>
   <body>
-    <h1>Pings</h1>
-    <ul id='pings'></ul>
+    <h1>Sup Bois</h1>
+    <input type="text" placeholder="message" id="msg" > </input><button type="submit" onclick="send()"> Send</button>
+    <input type="text" id="shiftBit" maxlength="2" placeholder="shiftbit" ></input>
+    <textarea id="chatWIndow">
+    </textarea>
   </body>
 </html>

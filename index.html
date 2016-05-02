@@ -123,17 +123,6 @@ p {
 
 (function() {
 
-  var host = location.origin.replace(/^http/, 'ws')
-  var ws = new WebSocket(host);
-  ws.onmessage = function (event) {
-    let txt = JSON.parse(event.data);
-    console.log(txt)
-    if(txt.length>1)
-      console.log(txt)
-      console.log(event);
-      playNote2(txt);
-      endNote2(txt);
-  };
 
 
 
@@ -240,6 +229,18 @@ Sound.prototype.stop = function() {
 };
 
 function createKeyboard(notes, containerId) {
+
+    var host = location.origin.replace(/^http/, 'ws')
+    var ws = new WebSocket(host);
+    ws.onmessage = function (event) {
+      let txt = JSON.parse(event.data);
+      console.log(txt)
+      if(txt.length>1)
+        console.log(txt)
+        console.log(event);
+        playNote2(txt);
+        //endNote2(txt);
+    };
     var sortedKeys = []; // Placeholder for keys to be sorted
     var waveFormSelector = document.getElementById('soundType');
 

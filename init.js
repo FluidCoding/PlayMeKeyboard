@@ -118,7 +118,7 @@ function createKeyboard(notes, containerId) {
 
     ws.onclose = function(){
       document.getElementById("con_status").innerHTML="Disconnected"
-      document.getElementById("reconnect").style.display="inline-block;"
+      document.getElementById("reconnect").style.display="inline-block"
     }
 
     ws.onerror = function(e){

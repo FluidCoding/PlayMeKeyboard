@@ -237,7 +237,7 @@ function createKeyboard(notes, containerId) {
 }
 
 function readChat(_msg){
-    $("#chatArea") $(cOut).append(_msg+"\n")
+    $("#chatArea").append(_msg+"\n")
 }
 
 function sendChat(){

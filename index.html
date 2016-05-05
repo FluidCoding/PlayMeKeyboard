@@ -47,6 +47,8 @@ p {
     width: 510px;
     overflow: auto;
     padding: 1em;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .key {
@@ -230,18 +232,18 @@ Sound.prototype.stop = function() {
 
 function createKeyboard(notes, containerId) {
 
-    var host = location.origin.replace(/^http/, 'ws')
+    const host = location.origin.replace(/^http/, 'ws')
     var ws = new WebSocket(host);
+
     ws.onmessage = function (event) {
-      let txt = JSON.parse(event.data);
+      const txt = JSON.parse(event.data);
       console.log(txt)
       if(txt.length>1)
         console.log(txt)
-        if(txt.charAt(0)==='D')
-          playNote2(txt[1]);
-        else
-          endNote2(txt[1]);
+        if(txt.charAt(0)==='D') playNote2(txt[1]);
+        else if(txt.charAt(0)==='U') endNote2(txt[1]);
     };
+
     var sortedKeys = []; // Placeholder for keys to be sorted
     var waveFormSelector = document.getElementById('soundType');
 

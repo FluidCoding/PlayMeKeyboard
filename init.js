@@ -108,11 +108,9 @@ Sound.prototype.stop = function() {
 };
 
 function createKeyboard(notes, containerId) {
-    createSocket()
     ws.onopen = function(){
       document.getElementById("con_status").innerHTML="Connected"
       document.getElementById("reconnect").style.display="none"
-
     }
 
     ws.onclose = function(){

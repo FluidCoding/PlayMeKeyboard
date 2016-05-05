@@ -256,9 +256,10 @@ function createKeyboard(notes, containerId) {
 }
 
 function createSocket(){
-    ws = new WebSocket(host);
-
-
+    console.log(ws)
+    document.getElementById("keyboard").innerHTML = ""
+    ws = new WebSocket(host)
+    createKeyboard(notesByKeyCode, '#keyboard');
 }
 
 function sendChat(){
@@ -270,7 +271,6 @@ function sendChat(){
 
 window.addEventListener('load', function() {
     createSocket()
-    createKeyboard(notesByKeyCode, '#keyboard');
     $("#chatSendBtn").on('click', sendChat)
     $("#reconnect").on('click', createSocket)
 });

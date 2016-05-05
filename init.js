@@ -235,9 +235,9 @@ function createKeyboard(notes, containerId) {
     //window.addEventListener('keyup', endNote);
 }
 
-function readChat(_msg){
-    $("#chatArea").append(_msg+"\n")
-    console.log(_msg, $("#chatArea"))
+function readChat(msg){
+    $("#chatArea").append(msg+"\n")
+    console.log(msg, $("#chatArea"))
 }
 
 function sendChat(){

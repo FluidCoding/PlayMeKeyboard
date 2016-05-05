@@ -111,9 +111,14 @@ function createKeyboard(notes, containerId) {
     const host = location.origin.replace(/^http/, 'ws')
     ws = new WebSocket(host);
 
+    ws.onopen = function(){
+      document.getElementById("con_status").innerHTML="Connected"
+
+    }
+
     ws.onclose = function(){
-      getElementById("con_status").innerHTML="Disconnected"
-      getElementById("reconnect").style.display="inline-block;"
+      document.getElementById("con_status").innerHTML="Disconnected"
+      document.getElementById("reconnect").style.display="inline-block;"
     }
 
     ws.onerror = function(e){

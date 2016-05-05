@@ -239,11 +239,12 @@ function createKeyboard(notes, containerId) {
 function sendChat(){
     const msgInput = document.getElementById("chatMessage")
     if(msgInput.value.length>0) ws.send("M" + msgInput.value)
+    console.log(msgInput)
 }
 
 
 window.addEventListener('load', function() {
     createKeyboard(notesByKeyCode, '#keyboard');
-    $("#chatSendBtn").on('click', sendChat())
+    $("#chatSendBtn").on('click', sendChat)
 });
 })();

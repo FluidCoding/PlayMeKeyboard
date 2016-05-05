@@ -267,7 +267,7 @@ function createKeyboard(notes, containerId) {
     //window.addEventListener('keydown', playNote);
     //window.addEventListener('keyup', endNote);
 
-    $("div .key").on('touchstart', function(){touchUp(($(this)[0].childNodes[1].innerHTML)})
+    $("div .key").on('touchstart', function(){touchUp($(this)[0].childNodes[1].innerHTML)})
     $("div .key").on('touchend', function(){touchDown($(this)[0].childNodes[1].innerHTML)})
 }
 

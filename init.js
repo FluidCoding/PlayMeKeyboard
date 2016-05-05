@@ -1,8 +1,8 @@
 
 (function() {
 
-
-
+// WebSocket
+var ws
 
 // Create audio (context) container
 var audioCtx = new (AudioContext || webkitAudioContext)();
@@ -109,7 +109,7 @@ Sound.prototype.stop = function() {
 function createKeyboard(notes, containerId) {
 
     const host = location.origin.replace(/^http/, 'ws')
-    var ws = new WebSocket(host);
+    ws = new WebSocket(host);
 
     ws.onmessage = function (event) {
       const txt = JSON.parse(event.data);

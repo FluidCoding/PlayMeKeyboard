@@ -1,6 +1,6 @@
-# Node.js Websocket Test
+# Node.js Websocket Multiplayer keyboard
 
-A tiny demo using the [einaros/ws](http://einaros.github.io/ws/) WebSockets implementation.
+Use Keyboard keys to play some strange.
 
 # Running Locally
 

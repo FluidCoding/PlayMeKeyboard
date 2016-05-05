@@ -30,11 +30,12 @@ wss.on("connection", function(ws) {
     }
     else{
       for(var i =0; i<clients.length;i++){
-      try{if(clients[i]!==ws)
-        clients[i].send(JSON.stringify(message));
-      }catch(e){}
-    });
-  }
+        try{if(clients[i]!==ws)
+          clients[i].send(JSON.stringify(message));
+          }catch(e){}
+        }
+    }
+  });
 
 
   console.log("websocket connection open")

@@ -238,6 +238,7 @@ function createKeyboard(notes, containerId) {
 
 function sendChat(){
     const msgInput = $("#chatMessage")
+    console.log(msgInput)
     if(msgInput.val().length>0) ws.send("M" + msgInput.val())
 }
 

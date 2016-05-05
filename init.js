@@ -115,7 +115,6 @@ function createKeyboard(notes, containerId) {
       const txt = JSON.parse(event.data);
       console.log(txt)
       if(txt.length>1)
-        console.log(txt)
         if(txt.charAt(0)==='D') playNote2(txt[1])
         else if(txt.charAt(0)==='U') endNote2(txt[1])
         else if(txt.charAt(0)==='M') readChat(txt.slice(1))
@@ -238,6 +237,7 @@ function createKeyboard(notes, containerId) {
 
 function readChat(_msg){
     $("#chatArea").append(_msg+"\n")
+    console.log(_msg, $("#chatArea"))
 }
 
 function sendChat(){

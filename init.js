@@ -180,13 +180,13 @@ function createKeyboard(notes, containerId) {
 
     var touchDown = function(kN){
       console.log('touchdown', kN)
-      ws.send("D" +kN )
+      ws.send("D" +(kN).toUpperCase() )
       playNote2(kN);
     }
 
     var touchUp = function(kN){
       console.log('touchdown', kN)
-      ws.send("U" + kN )
+      ws.send("U" + (kN).toUpperCase() )
       endNote2(kN);
     }
 

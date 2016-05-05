@@ -60,7 +60,7 @@ return  {
 var notesByKeyCode = getNotes(130.813);
 
 function Key(noteName, keyName, frequency, color) {
-    var keyHTML = $('<div></div>');
+    var keyHTML = $('<div touchstart=\'touchDown(' + keyName +')\' touchend=\'touchUp(' + keyName + ')\' ></div>');
     var keySound = new Sound(frequency, 'triangle');
 
     /* Style the key */
@@ -176,6 +176,19 @@ function createKeyboard(notes, containerId) {
         $("#chatArea").append(msg+"\n")
         $('#chatArea').scrollTop($('#chatArea')[0].scrollHeight)
     };
+
+
+    var touchDown = function(kN){
+      ws.send("D" + String.fromCharCode(kN) )
+      playNote2(kN);
+    }
+
+    var touchDown = function(kN){
+      ws.send("U" + String.fromCharCode(kN) )
+      endNote2(kN);
+    }
+
+
 
     var playNote2 = function(keyCode) {
         if(typeof notesByKeyCode[keyCode] !== 'undefined') {

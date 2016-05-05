@@ -23,10 +23,10 @@ wss.on("connection", function(ws) {
   ws.on('message', function incoming(message) {
     console.log('received: %s', message);
     if(message.charAt(0)==='M'){
-      for(var i =0; i<clients.length;i++){
+      for(var i =0; i<clients.length;i++){try{
         clients[i].send(JSON.stringify(message));
-      }catch(e){}
-    });
+        }catch(e){}
+      }
     }
     else{
       for(var i =0; i<clients.length;i++){

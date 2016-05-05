@@ -237,7 +237,7 @@ function createKeyboard(notes, containerId) {
 
 function readChat(msg){
     $("#chatArea").append(msg+"\n")
-    console.log(msg, $("#chatArea"))
+    $('#chatArea').scrollTop($('#chatArea')[0].scrollHeight)
 }
 
 function sendChat(){
@@ -250,6 +250,5 @@ function sendChat(){
 window.addEventListener('load', function() {
     createKeyboard(notesByKeyCode, '#keyboard');
     $("#chatSendBtn").on('click', sendChat)
-    $("#chatArea").on('change', ()=>{ $('#textarea_id').scrollTop($('#chatArea')[0].scrollHeight)})
 });
 })();

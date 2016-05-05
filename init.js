@@ -3,6 +3,7 @@
 
 // WebSocket
 var ws
+    const host = location.origin.replace(/^http/, 'ws')
 
 // Create audio (context) container
 var audioCtx = new (AudioContext || webkitAudioContext)();
@@ -107,32 +108,6 @@ Sound.prototype.stop = function() {
 };
 
 function createKeyboard(notes, containerId) {
-
-    const host = location.origin.replace(/^http/, 'ws')
-    ws = new WebSocket(host);
-
-    ws.onopen = function(){
-      document.getElementById("con_status").innerHTML="Connected"
-
-    }
-
-    ws.onclose = function(){
-      document.getElementById("con_status").innerHTML="Disconnected"
-      document.getElementById("reconnect").style.display="inline-block"
-    }
-
-    ws.onerror = function(e){
-      console.log("error",e)
-    }
-
-    ws.onmessage = function (event) {
-      const txt = JSON.parse(event.data);
-      console.log(txt)
-      if(txt.length>1)
-        if(txt.charAt(0)==='D') playNote2(txt[1])
-        else if(txt.charAt(0)==='U') endNote2(txt[1])
-        else if(txt.charAt(0)==='M') readChat(txt.slice(1))
-    };
 
     var sortedKeys = []; // Placeholder for keys to be sorted
     var waveFormSelector = document.getElementById('soundType');
@@ -249,6 +224,36 @@ function createKeyboard(notes, containerId) {
     //window.addEventListener('keyup', endNote);
 }
 
+function createSocket(){
+    ws = new WebSocket(host);
+
+    ws.onopen = function(){
+      document.getElementById("con_status").innerHTML="Connected"
+      document.getElementById("reconnect").style.display="none"
+
+    }
+
+    ws.onclose = function(){
+      document.getElementById("con_status").innerHTML="Disconnected"
+      document.getElementById("reconnect").style.display="inline-block"
+    }
+
+    ws.onerror = function(e){
+      console.log("error",e)
+    }
+
+    ws.onmessage = function (event) {
+      const txt = JSON.parse(event.data);
+      console.log(txt)
+      if(txt.length>1)
+        if(txt.charAt(0)==='D') playNote2(txt[1])
+        else if(txt.charAt(0)==='U') endNote2(txt[1])
+        else if(txt.charAt(0)==='M') readChat(txt.slice(1))
+    };
+
+
+}
+
 function readChat(msg){
     $("#chatArea").append(msg+"\n")
     $('#chatArea').scrollTop($('#chatArea')[0].scrollHeight)
@@ -262,7 +267,9 @@ function sendChat(){
 
 
 window.addEventListener('load', function() {
+    createSocket()
     createKeyboard(notesByKeyCode, '#keyboard');
     $("#chatSendBtn").on('click', sendChat)
+    $("#reconnect").on('click', createSocket)
 });
 })();

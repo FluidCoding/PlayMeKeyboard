@@ -250,5 +250,6 @@ function sendChat(){
 window.addEventListener('load', function() {
     createKeyboard(notesByKeyCode, '#keyboard');
     $("#chatSendBtn").on('click', sendChat)
+    $("#chatArea").on('change', ()=>{ $('#textarea_id').scrollTop($('#chatArea')[0].scrollHeight)})
 });
 })();

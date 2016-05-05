@@ -118,7 +118,7 @@ function createKeyboard(notes, containerId) {
         console.log(txt)
         if(txt.charAt(0)==='D') playNote2(txt[1])
         else if(txt.charAt(0)==='U') endNote2(txt[1])
-        else if(txt.charAt(0)==='M') readMsg(txt.slice(1))
+        else if(txt.charAt(0)==='M') readChat(txt.slice(1))
     };
 
     var sortedKeys = []; // Placeholder for keys to be sorted
@@ -236,10 +236,14 @@ function createKeyboard(notes, containerId) {
     //window.addEventListener('keyup', endNote);
 }
 
+function readChat(_msg){
+    $("#chatArea") $(cOut).append(_msg+"\n")
+}
+
 function sendChat(){
     const msgInput = document.getElementById("chatMessage")
     if(msgInput.value.length>0) ws.send("M" + msgInput.value)
-    console.log(msgInput)
+    msgInput.value = ""
 }
 
 
